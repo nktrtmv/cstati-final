@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-presentation-abstractions";
+
+package Cstati.Events.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Presentation.Abstractions";
+
+import "google/protobuf/timestamp.proto";
+
+service CstatiEventsTasksService {
+  rpc Create(CreateCstatiEventsTasksCommand) returns (CreateCstatiEventsTasksCommandResponse);
+  rpc Update(UpdateCstatiEventsTasksCommand) returns (UpdateCstatiEventsTasksCommandResponse);
+  rpc Delete(DeleteCstatiEventsTasksCommand) returns (DeleteCstatiEventsTasksCommandResponse);
+
+  rpc GetAll(GetAllCstatiEventsTasksQuery) returns (GetAllCstatiEventsTasksQueryResponse);
+}
+
+// Requests
+
+message CreateCstatiEventsTasksCommand {
+  string event_id = 1;
+  string name = 2;
+  string executor_login = 3;
+  string description = 4;
+  optional google.protobuf.Timestamp deadline = 5;
+  string concurrency_token = 6;
+}
+
+message CreateCstatiEventsTasksCommandResponse { }
+
+message UpdateCstatiEventsTasksCommand {
+  string event_id = 1;
+  string task_id = 2;
+  string name = 3;
+  string executor_login = 4;
+  string description = 5;
+  optional google.protobuf.Timestamp deadline = 6;
+  CstatiEventTaskStatusDto status = 7;
+  string concurrency_token = 8;
+}
+
+message UpdateCstatiEventsTasksCommandResponse { }
+
+message DeleteCstatiEventsTasksCommand {
+  string event_id = 1;
+  string task_id = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteCstatiEventsTasksCommandResponse { }
+
+message GetAllCstatiEventsTasksQuery {
+  string event_id = 1;
+  repeated CstatiEventTaskStatusDto statuses_filter = 2;
+  int32 limit = 3;
+}
+
+message GetAllCstatiEventsTasksQueryResponse {
+  repeated GetAllCstatiEventsTasksQueryResponseTask tasks = 1;
+  string concurrency_token = 2;
+}
+
+// Contracts
+
+message GetAllCstatiEventsTasksQueryResponseTask {
+  string id = 1;
+  string name = 2;
+  string executor_login = 3;
+  string description = 4;
+  google.protobuf.Timestamp deadline = 5;
+  CstatiEventTaskStatusDto status = 6;
+}
+
+enum CstatiEventTaskStatusDto {
+  CstatiEventTaskStatusDto_None = 0;
+  CstatiEventTaskStatusDto_NotStarted = 1;
+  CstatiEventTaskStatusDto_InProgress = 2;
+  CstatiEventTaskStatusDto_Completed = 3;
+}

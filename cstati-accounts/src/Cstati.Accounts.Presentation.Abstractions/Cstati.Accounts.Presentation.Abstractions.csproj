@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf"/>
+    <PackageReference Include="Grpc.AspNetCore"/>
+    <PackageReference Include="Google.Api.CommonProtos"/>
+    <PackageReference Include="Grpc.Net.Client"/>
+    <PackageReference Include="Grpc.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="**/*.proto"/>
+  </ItemGroup>
+
+</Project>

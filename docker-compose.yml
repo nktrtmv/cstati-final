@@ -1,0 +1,186 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./cstati-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+  
+  gateway:
+    restart: always
+    container_name: gateway
+    build:
+      context: ./cstati-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
+    depends_on:
+      - events
+      - events_workflows
+      - accounts
+  
+  events:
+    container_name: events
+    build:
+      context: ./cstati-events
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5001
+    depends_on:
+      - events_postgres
+      - kafka
+
+  events_postgres:
+    container_name: events_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "cstati-events"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "7001:5432"
+
+  events_postgres_migrator:
+    image: migrator
+    volumes:
+      - ./cstati-events/src/Cstati.Events.Infrastructure/Migrations/:/migrations/
+    command: >
+      /bin/bash -c "
+        dockerize -wait tcp://events_postgres:5432 -timeout 1m &&
+        goose -dir=/migrations postgres 'host=events_postgres user=postgres password=postgres dbname=cstati-events sslmode=disable' up
+      "
+    depends_on:
+      - events_postgres
+  
+  events_workflows:
+    container_name: events_workflows
+    build:
+      context: ./cstati-events-workflows
+      dockerfile: Dockerfile
+    ports:
+      - 5002:5002
+    depends_on:
+      - events_workflows_postgres
+      - kafka
+  
+  events_workflows_postgres:
+    container_name: events_workflows_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "cstati-events-workflows"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "7002:5432"
+
+  events_workflows_postgres_migrator:
+    image: migrator
+    volumes:
+      - ./cstati-events-workflows/src/Cstati.Events.Workflows.Infrastructure/Migrations/:/migrations/
+    command: >
+      /bin/bash -c "
+        dockerize -wait tcp://events_workflows_postgres:5432 -timeout 1m &&
+        goose -dir=/migrations postgres 'host=events_workflows_postgres user=postgres password=postgres dbname=cstati-events-workflows sslmode=disable' up
+      "
+    depends_on:
+      - events_workflows_postgres
+  
+  accounts:
+    container_name: accounts
+    build:
+      context: ./cstati-accounts
+      dockerfile: Dockerfile
+    ports:
+      - 5003:5003
+    depends_on:
+      - accounts_postgres
+      - kafka
+  
+  accounts_postgres:
+    container_name: accounts_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "cstati-accounts"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "7003:5432"
+
+  accounts_postgres_migrator:
+    image: migrator
+    volumes:
+      - ./cstati-accounts/src/Cstati.Accounts.Infrastructure/Migrations/:/migrations/
+    command: >
+      /bin/bash -c "
+        dockerize -wait tcp://accounts_postgres:5432 -timeout 1m &&
+        goose -dir=/migrations postgres 'host=accounts_postgres user=postgres password=postgres dbname=cstati-accounts sslmode=disable' up
+      "
+    depends_on:
+      - accounts_postgres
+
+  telegram_bot:
+    container_name: telegram_bot
+    build:
+      context: ./cstati-telegram-bot
+      dockerfile: Dockerfile
+    volumes:
+      - ./cstati-telegram-bot/chat_data:/app/user_data
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - telegram_bot_postgres
+      - kafka
+    ports:
+      - "5005:5005"
+
+  telegram_bot_postgres:
+    container_name: telegram_bot_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "cstati-telegram-bot"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "7005:5432"
+
+  telegram_bot_postgres_migrator:
+    image: migrator
+    volumes:
+      - ./cstati-telegram-bot/migrations/:/migrations/
+    command: >
+      /bin/bash -c "
+        dockerize -wait tcp://telegram_bot_postgres:5432 -timeout 1m &&
+        goose -dir=/migrations postgres 'host=telegram_bot_postgres user=postgres password=postgres dbname=cstati-telegram-bot sslmode=disable' up
+      "
+    depends_on:
+      - telegram_bot_postgres
+  
+  zookeeper:
+    container_name: zookeeper
+    image: bitnami/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+  
+  kafka:
+    container_name: kafka
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://127.0.0.1:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: >-
+        cstati-events-workflows-events:3:1
+    ports:
+      - "9092:9092"
+    expose:
+      - 9093
+  

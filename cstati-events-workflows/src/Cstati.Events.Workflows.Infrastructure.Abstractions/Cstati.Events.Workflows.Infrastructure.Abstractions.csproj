@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Events.Workflows.Domain\Cstati.Events.Workflows.Domain.csproj"/>
+  </ItemGroup>
+
+</Project>

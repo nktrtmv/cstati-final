@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-workflows-presentation-abstractions";
+
+package Cstati.Events.Workflows.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Workflows.Presentation.Abstractions";
+
+import "google/protobuf/timestamp.proto";
+
+service CstatiEventsWorkflowsWavesService {
+  rpc Create(CreateCstatiEventsWorkflowsWavesCommand) returns (CreateCstatiEventsWorkflowsWavesCommandResponse);
+  rpc Delete(DeleteCstatiEventsWorkflowsWavesCommand) returns (DeleteCstatiEventsWorkflowsWavesCommandResponse);
+  rpc Start(StartCstatiEventsWorkflowsWavesCommand) returns (StartCstatiEventsWorkflowsWavesCommandResponse);
+  rpc Complete(CompleteCstatiEventsWorkflowsWavesCommand) returns (CompleteCstatiEventsWorkflowsWavesCommandResponse);
+
+  rpc GetAll(GetAllCstatiEventsWorkflowsWavesQuery) returns (GetAllCstatiEventsWorkflowsWavesQueryResponse);
+}
+
+// Requests
+
+message CreateCstatiEventsWorkflowsWavesCommand {
+  string event_id = 1;
+  string concurrency_token = 2;
+}
+
+message CreateCstatiEventsWorkflowsWavesCommandResponse { }
+
+message DeleteCstatiEventsWorkflowsWavesCommand {
+  string event_id = 1;
+  int32 ordinal = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteCstatiEventsWorkflowsWavesCommandResponse { }
+
+message StartCstatiEventsWorkflowsWavesCommand {
+  string event_id = 1;
+  int32 ordinal = 2;
+  string concurrency_token = 3;
+}
+
+message StartCstatiEventsWorkflowsWavesCommandResponse { }
+
+message CompleteCstatiEventsWorkflowsWavesCommand {
+  string event_id = 1;
+  int32 ordinal = 2;
+  string concurrency_token = 3;
+}
+
+message CompleteCstatiEventsWorkflowsWavesCommandResponse { }
+
+message GetAllCstatiEventsWorkflowsWavesQuery {
+  string event_id = 1;
+}
+
+message GetAllCstatiEventsWorkflowsWavesQueryResponse {
+  repeated GetAllCstatiEventsWorkflowsWavesQueryResponseWave waves = 1;
+  string concurrency_token = 2;
+}
+
+// Contracts
+
+message GetAllCstatiEventsWorkflowsWavesQueryResponseWave {
+  int32 ordinal = 1;
+  optional google.protobuf.Timestamp started_at = 3;
+  optional google.protobuf.Timestamp completed_at = 4;
+}

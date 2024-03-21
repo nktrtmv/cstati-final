@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+enum CstatiEventStatusDb {
+  CstatiEventStatusDb_None = 0;
+  CstatiEventStatusDb_NotStarted = 1;
+  CstatiEventStatusDb_InProgress = 2;
+  CstatiEventStatusDb_Finished = 3;
+}

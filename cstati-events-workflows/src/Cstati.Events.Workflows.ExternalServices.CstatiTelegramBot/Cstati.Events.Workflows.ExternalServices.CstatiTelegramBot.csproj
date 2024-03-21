@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf"/>
+    <PackageReference Include="Grpc.AspNetCore"/>
+    <PackageReference Include="Grpc.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="**/*.proto"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Events.Workflows.ExternalServices\Cstati.Events.Workflows.ExternalServices.csproj"/>
+    <ProjectReference Include="..\Cstati.Events.Workflows.GenericSubdomain\Cstati.Events.Workflows.GenericSubdomain.csproj"/>
+  </ItemGroup>
+
+</Project>

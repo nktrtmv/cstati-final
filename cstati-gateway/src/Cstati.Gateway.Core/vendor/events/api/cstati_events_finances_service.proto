@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-presentation-abstractions";
+
+package Cstati.Events.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Presentation.Abstractions";
+
+import "google/protobuf/wrappers.proto";
+
+service CstatiEventsFinancesService {
+  rpc AddExpense(AddExpenseCstatiEventsFinancesCommand) returns (AddExpenseCstatiEventsFinancesCommandResponse);
+  rpc DeleteExpense(DeleteExpenseCstatiEventsFinancesCommand) returns (DeleteExpenseCstatiEventsFinancesCommandResponse);
+  rpc ActualizeRevenue(ActualizeRevenueCstatiEventsFinancesCommand) returns (ActualizeRevenueCstatiEventsFinancesCommandResponse);
+
+  rpc GetDetails(GetDetailsCstatiEventsFinancesQuery) returns (GetDetailsCstatiEventsFinancesQueryResponse);
+}
+
+// Requests
+
+message AddExpenseCstatiEventsFinancesCommand {
+  string event_id = 1;
+  string person_login = 2;
+  string description = 3;
+  double amount = 4;
+  string market = 5;
+  string concurrency_token = 6;
+}
+
+message AddExpenseCstatiEventsFinancesCommandResponse { }
+
+message DeleteExpenseCstatiEventsFinancesCommand {
+  string event_id = 1;
+  string expense_id = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteExpenseCstatiEventsFinancesCommandResponse { }
+
+message ActualizeRevenueCstatiEventsFinancesCommand {
+  string event_id = 1;
+  string concurrency_token = 2;
+}
+
+message ActualizeRevenueCstatiEventsFinancesCommandResponse { }
+
+message GetDetailsCstatiEventsFinancesQuery {
+  string event_id = 1;
+  int32 expenses_limit = 2;
+}
+
+message GetDetailsCstatiEventsFinancesQueryResponse {
+  double collected = 1;
+  double current_balance = 2;
+  repeated GetDetailsCstatiEventsFinancesQueryResponseExpense expenses = 3;
+  optional google.protobuf.DoubleValue revenue = 4;
+  string concurrency_token = 5;
+}
+
+// Contracts
+
+message GetDetailsCstatiEventsFinancesQueryResponseExpense {
+  string id = 1;
+  string person_login = 2;
+  string description = 3;
+  double amount = 4;
+  string market = 5;
+}

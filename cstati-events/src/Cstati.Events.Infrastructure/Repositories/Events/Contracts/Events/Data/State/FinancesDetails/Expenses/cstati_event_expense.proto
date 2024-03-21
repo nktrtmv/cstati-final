@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+message CstatiEventExpenseDb {
+  string id = 1;
+  string person_login = 2;
+  string description = 3;
+  double amount = 4;
+  string market = 5;
+}

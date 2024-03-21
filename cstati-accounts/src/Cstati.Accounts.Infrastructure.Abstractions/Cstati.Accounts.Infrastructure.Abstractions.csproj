@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Accounts.Domain\Cstati.Accounts.Domain.csproj"/>
+  </ItemGroup>
+
+</Project>

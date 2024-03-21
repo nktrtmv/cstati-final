@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations"/>
+    <PackageReference Include="MediatR"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="**\*Converter.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', '((From|To)(Domain))?Converter$', '.cs'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Events.Domain\Cstati.Events.Domain.csproj"/>
+    <ProjectReference Include="..\Cstati.Events.GenericSubdomain\Cstati.Events.GenericSubdomain.csproj"/>
+    <ProjectReference Include="..\Cstati.Events.Infrastructure.Abstractions\Cstati.Events.Infrastructure.Abstractions.csproj"/>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-workflows-presentation-abstractions";
+
+package Cstati.Events.Workflows.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Workflows.Presentation.Abstractions";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+import "workflows/contracts/cstati_events_workflows_common_contracts.proto";
+
+service CstatiEventsWorkflowsGuestsService {
+  rpc Add(AddCstatiEventsWorkflowsGuestsCommand) returns (AddCstatiEventsWorkflowsGuestsCommandResponse);
+  rpc Update(UpdateCstatiEventsWorkflowsGuestsCommand) returns (UpdateCstatiEventsWorkflowsGuestsCommandResponse);
+  rpc Delete(DeleteCstatiEventsWorkflowsGuestsCommand) returns (DeleteCstatiEventsWorkflowsGuestsCommandResponse);
+  rpc SendTelegramMessages(SendTelegramMessagesCstatiEventsWorkflowsGuestsCommand) returns (SendTelegramMessagesCstatiEventsWorkflowsGuestsCommandResponse);
+  rpc SendPaymentTelegramMessages(SendPaymentTelegramMessagesCstatiEventsWorkflowsGuestsCommand) returns (SendPaymentTelegramMessagesCstatiEventsWorkflowsGuestsCommandResponse);
+
+  rpc GetAll(GetAllCstatiEventsWorkflowsGuestsQuery) returns (GetAllCstatiEventsWorkflowsGuestsQueryResponse);
+}
+
+// Requests
+
+message AddCstatiEventsWorkflowsGuestsCommand {
+  string event_id = 1;
+  repeated AddCstatiEventsWorkflowsGuestsCommandGuest guests = 2;
+  string concurrency_token = 3;
+}
+
+message AddCstatiEventsWorkflowsGuestsCommandResponse { }
+
+message UpdateCstatiEventsWorkflowsGuestsCommand {
+  string event_id = 1;
+  string guest_id = 2;
+  string full_name = 3;
+  CstatiEventWorkflowGuestGenderDto gender = 4;
+  string telegram_login = 5;
+  CstatiEventWorkflowGuestPaymentStatusDto payment_status_change_to = 6;
+  CstatiEventWorkflowGuestEducationalProgramDto educational_program = 7;
+  string phone_number = 8;
+  bool is_legal_age = 9;
+  CstatiEventWorkflowTicketTypeDto ticket_type = 10;
+  optional google.protobuf.BoolValue transfer_is_required = 11;
+  string concurrency_token = 12;
+}
+
+message UpdateCstatiEventsWorkflowsGuestsCommandResponse { }
+
+message DeleteCstatiEventsWorkflowsGuestsCommand {
+  string event_id = 1;
+  string guest_id = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteCstatiEventsWorkflowsGuestsCommandResponse { }
+
+message SendTelegramMessagesCstatiEventsWorkflowsGuestsCommand {
+  string event_Id = 1;
+  repeated CstatiEventWorkflowGuestPaymentStatusDto recipients_payment_statuses = 2;
+  string message = 3;
+}
+
+message SendTelegramMessagesCstatiEventsWorkflowsGuestsCommandResponse { }
+
+message SendPaymentTelegramMessagesCstatiEventsWorkflowsGuestsCommand {
+  string event_id = 1;
+  string message = 2;
+  google.protobuf.Timestamp deadline = 3;
+  string concurrency_token = 4;
+}
+
+message SendPaymentTelegramMessagesCstatiEventsWorkflowsGuestsCommandResponse { }
+
+message GetAllCstatiEventsWorkflowsGuestsQuery {
+  string event_id = 1;
+  optional google.protobuf.Int32Value wave_ordinal = 2;
+}
+
+message GetAllCstatiEventsWorkflowsGuestsQueryResponse {
+  repeated GetAllCstatiEventsWorkflowsGuestsQueryResponseGuest guests = 1;
+  string concurrency_token = 2;
+}
+
+// Contracts
+
+message AddCstatiEventsWorkflowsGuestsCommandGuest {
+  string full_name = 1;
+  CstatiEventWorkflowGuestGenderDto gender = 2;
+  string telegram_login = 3;
+  CstatiEventWorkflowGuestEducationalProgramDto educational_program = 4;
+  string phone_number = 5;
+  bool is_legal_age = 6;
+  CstatiEventWorkflowTicketTypeDto preferred_ticket_type = 7;
+  optional google.protobuf.BoolValue is_transfer_requested = 8;
+}
+
+message GetAllCstatiEventsWorkflowsGuestsQueryResponseGuest {
+  int32 wave_ordinal = 1;
+  string guest_id = 2;
+  string full_name = 3;
+  CstatiEventWorkflowGuestGenderDto gender = 4;
+  string telegram_login = 5;
+  GetAllCstatiEventsWorkflowsGuestsQueryResponseGuestPaymentInfo payment_info = 6;
+  CstatiEventWorkflowGuestEducationalProgramDto educational_program = 7;
+  string phone_number = 8;
+  bool is_legal_age = 9;
+  CstatiEventWorkflowTicketTypeDto ticket_type = 10;
+  optional google.protobuf.BoolValue transfer_is_required = 11;
+}
+
+enum CstatiEventWorkflowGuestGenderDto {
+  CstatiEventWorkflowGuestGenderDto_None = 0;
+  CstatiEventWorkflowGuestGenderDto_Male = 1;
+  CstatiEventWorkflowGuestGenderDto_Female = 2;
+}
+
+enum CstatiEventWorkflowGuestEducationalProgramDto {
+  CstatiEventWorkflowGuestEducationalProgramDto_None = 0;
+  CstatiEventWorkflowGuestEducationalProgramDto_SoftwareEngineering = 1;
+  CstatiEventWorkflowGuestEducationalProgramDto_AppliedMathematicsAndInformatics = 2;
+  CstatiEventWorkflowGuestEducationalProgramDto_AppliedDataAnalysis = 3;
+  CstatiEventWorkflowGuestEducationalProgramDto_ComputerScienceAndDataAnalysis = 4;
+  CstatiEventWorkflowGuestEducationalProgramDto_EconomicsAndDataAnalysis = 5;
+}
+
+message GetAllCstatiEventsWorkflowsGuestsQueryResponseGuestPaymentInfo {
+  CstatiEventWorkflowGuestPaymentStatusDto status = 1;
+  repeated GetAllCstatiEventsWorkflowsGuestsQueryResponseGuestPaymentAuditRecord audit_records = 2;
+}
+
+message GetAllCstatiEventsWorkflowsGuestsQueryResponseGuestPaymentAuditRecord {
+  google.protobuf.Timestamp date = 1;
+  CstatiEventWorkflowGuestPaymentStatusDto status_changed_to = 2;
+}

@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Gateway.Presentation", "src/Cstati.Gateway.Presentation\Cstati.Gateway.Presentation.csproj", "{A7E40133-0FBA-42DA-B8AB-228195E577D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Gateway.Core", "src/Cstati.Gateway.Core\Cstati.Gateway.Core.csproj", "{44232501-5B9A-455B-8C26-E62F751EA8A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{7BE0D29B-4C40-45B3-A19A-195BEF811C52}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A2581C9D-2A5E-44F3-AD72-C8FA1E76A65C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Gateway.GenericSubdomain", "src\Cstati.Gateway.GenericSubdomain\Cstati.Gateway.GenericSubdomain.csproj", "{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7E40133-0FBA-42DA-B8AB-228195E577D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E40133-0FBA-42DA-B8AB-228195E577D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E40133-0FBA-42DA-B8AB-228195E577D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E40133-0FBA-42DA-B8AB-228195E577D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44232501-5B9A-455B-8C26-E62F751EA8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44232501-5B9A-455B-8C26-E62F751EA8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44232501-5B9A-455B-8C26-E62F751EA8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44232501-5B9A-455B-8C26-E62F751EA8A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44232501-5B9A-455B-8C26-E62F751EA8A1} = {A2581C9D-2A5E-44F3-AD72-C8FA1E76A65C}
+		{A7E40133-0FBA-42DA-B8AB-228195E577D1} = {A2581C9D-2A5E-44F3-AD72-C8FA1E76A65C}
+		{F1C148B6-9FB5-49B4-9C70-BC2EAE10289D} = {A2581C9D-2A5E-44F3-AD72-C8FA1E76A65C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "cstati-telegram-bot-api";
+
+package Cstati.Telegram.Bot.Api;
+
+service CstatiTelegramBotService {
+  rpc SendMessage(SendMessageCstatiTelegramBotRequest) returns (SendMessageCstatiTelegramBotRequestResponse);
+}
+
+// Requests
+
+message SendMessageCstatiTelegramBotRequest {
+  repeated SendMessageCstatiTelegramBotRequestMessage messages = 1;
+}
+
+message SendMessageCstatiTelegramBotRequestResponse { }
+
+// Contracts
+
+message SendMessageCstatiTelegramBotRequestMessage {
+  string recipient_login = 1;
+  string message = 2;
+}

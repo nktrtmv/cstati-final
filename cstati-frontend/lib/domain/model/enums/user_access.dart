@@ -1,0 +1,1 @@
+enum AccountAccess {admin, eventAdmin, eventResponsible, paymentsResponsible,}

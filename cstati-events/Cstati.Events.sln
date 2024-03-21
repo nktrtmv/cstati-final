@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Presentation", "src/Cstati.Events.Presentation\Cstati.Events.Presentation.csproj", "{88095124-D5BB-4583-A653-BD73F50F18E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{46D71EE5-26AF-4B11-B209-5A2AF891A1BF}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Application", "src\Cstati.Events.Application\Cstati.Events.Application.csproj", "{11C8547A-547C-4C5E-9922-68BE854D8208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Domain", "src\Cstati.Events.Domain\Cstati.Events.Domain.csproj", "{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Infrastructure", "src\Cstati.Events.Infrastructure\Cstati.Events.Infrastructure.csproj", "{756930BA-8190-454B-8608-BC2597FFC8E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Presentation.Abstractions", "src\Cstati.Events.Presentation.Abstractions\Cstati.Events.Presentation.Abstractions.csproj", "{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Infrastructure.Abstractions", "src\Cstati.Events.Infrastructure.Abstractions\Cstati.Events.Infrastructure.Abstractions.csproj", "{8D8F696D-4D52-433A-AB68-0241EC2A02D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.GenericSubdomain", "src\Cstati.Events.GenericSubdomain\Cstati.Events.GenericSubdomain.csproj", "{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cstati.Events.Presentation.Publisher", "src\Cstati.Events.Presentation.Publisher\Cstati.Events.Presentation.Publisher.csproj", "{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88095124-D5BB-4583-A653-BD73F50F18E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88095124-D5BB-4583-A653-BD73F50F18E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88095124-D5BB-4583-A653-BD73F50F18E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88095124-D5BB-4583-A653-BD73F50F18E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C8547A-547C-4C5E-9922-68BE854D8208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C8547A-547C-4C5E-9922-68BE854D8208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C8547A-547C-4C5E-9922-68BE854D8208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C8547A-547C-4C5E-9922-68BE854D8208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{756930BA-8190-454B-8608-BC2597FFC8E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{756930BA-8190-454B-8608-BC2597FFC8E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{756930BA-8190-454B-8608-BC2597FFC8E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{756930BA-8190-454B-8608-BC2597FFC8E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8F696D-4D52-433A-AB68-0241EC2A02D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8F696D-4D52-433A-AB68-0241EC2A02D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8F696D-4D52-433A-AB68-0241EC2A02D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8F696D-4D52-433A-AB68-0241EC2A02D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88095124-D5BB-4583-A653-BD73F50F18E3} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{11C8547A-547C-4C5E-9922-68BE854D8208} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{DEB5F394-EAA8-4F2C-88C7-A9DA7671A400} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{756930BA-8190-454B-8608-BC2597FFC8E0} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{2870A2B6-DD15-4B5E-8901-FF75AF4E0D46} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{8D8F696D-4D52-433A-AB68-0241EC2A02D9} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{E23A5B4F-9D8B-47C1-BF44-17A450A3A3D0} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+		{B0FADDB1-8869-4FDE-9CF6-3B03602B5F8A} = {2CEB9E93-295E-48B6-AA77-3A5C4D29EF5F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-workflows-presentation-abstractions";
+
+package Cstati.Events.Workflows.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Workflows.Presentation.Abstractions";
+
+enum CstatiEventWorkflowTicketTypeDto {
+  CstatiEventWorkflowTicketTypeDto_None = 0;
+  CstatiEventWorkflowTicketTypeDto_Standard = 1;
+  CstatiEventWorkflowTicketTypeDto_Comfort = 2;
+}
+
+enum CstatiEventWorkflowGuestPaymentStatusDto {
+  CstatiEventWorkflowGuestPaymentStatusDto_None = 0;
+  CstatiEventWorkflowGuestPaymentStatusDto_Pending = 1;
+  CstatiEventWorkflowGuestPaymentStatusDto_Cancelled = 2;
+  CstatiEventWorkflowGuestPaymentStatusDto_Paid = 3;
+  CstatiEventWorkflowGuestPaymentStatusDto_RefundRequested = 4;
+  CstatiEventWorkflowGuestPaymentStatusDto_Refunded = 5;
+}

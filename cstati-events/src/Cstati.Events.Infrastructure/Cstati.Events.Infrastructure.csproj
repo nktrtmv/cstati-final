@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Update="**\*Queries.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', 'Queries$', '.cs'))</DependentUpon>
+    </Compile>
+
+    <Compile Update="**\*Converter.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', '((From|To)Domain)?Converter$', '.cs'))</DependentUpon>
+    </Compile>
+
+    <Compile Update="**\Data\**\*Db*Converter.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace($([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', 'Db((From|To)Domain)?Converter$', '.proto')), '([a-z])([A-Z])', '$1_$2'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Events.Infrastructure.Abstractions\Cstati.Events.Infrastructure.Abstractions.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper"/>
+    <PackageReference Include="Microsoft.Extensions.Options"/>
+    <PackageReference Include="Npgsql"/>
+    <PackageReference Include="Google.Protobuf"/>
+    <PackageReference Include="Google.Api.CommonProtos"/>
+    <PackageReference Include="Grpc.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="**/*.proto"/>
+  </ItemGroup>
+
+</Project>

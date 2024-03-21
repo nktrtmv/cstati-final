@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+import "google/protobuf/timestamp.proto";
+
+import "Repositories/Events/Contracts/Events/Data/State/Tasks/Statuses/cstati_event_task_status.proto";
+
+message CstatiEventTaskDb {
+  string id = 1;
+  string name = 2;
+  string executor_login = 3;
+  string description = 4;
+  optional google.protobuf.Timestamp deadline = 5;
+  CstatiEventTaskStatusDb status = 6;
+}
+

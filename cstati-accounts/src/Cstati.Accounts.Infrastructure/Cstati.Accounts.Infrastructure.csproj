@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Update="**\*Queries.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', 'Queries$', '.cs'))</DependentUpon>
+    </Compile>
+
+    <Compile Update="**\*Converter.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', '((From|To)Domain)?Converter$', '.cs'))</DependentUpon>
+    </Compile>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cstati.Accounts.Infrastructure.Abstractions\Cstati.Accounts.Infrastructure.Abstractions.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper"/>
+    <PackageReference Include="Microsoft.Extensions.Options"/>
+    <PackageReference Include="Npgsql"/>
+  </ItemGroup>
+
+</Project>

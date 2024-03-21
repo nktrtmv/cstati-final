@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+import "Repositories/Events/Contracts/Events/Data/State/FinancesDetails/Expenses/cstati_event_expense.proto";
+
+message CstatiEventFinancesDetailsDb {
+  double collected = 1;
+  double current_balance = 2;
+  repeated CstatiEventExpenseDb expenses = 3;
+  double revenue = 4;
+}

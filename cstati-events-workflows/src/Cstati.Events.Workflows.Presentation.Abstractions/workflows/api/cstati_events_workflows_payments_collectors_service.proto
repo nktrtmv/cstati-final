@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-workflows-presentation-abstractions";
+
+package Cstati.Events.Workflows.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Workflows.Presentation.Abstractions";
+
+import "workflows/contracts/cstati_events_workflows_common_contracts.proto";
+
+service CstatiEventsWorkflowsPaymentsCollectorsService {
+  rpc Create(CreateCstatiEventsWorkflowsPaymentsCollectorsCommand) returns (CreateCstatiEventsWorkflowsPaymentsCollectorsCommandResponse);
+  rpc Update(UpdateCstatiEventsWorkflowsPaymentsCollectorsCommand) returns (UpdateCstatiEventsWorkflowsPaymentsCollectorsCommandResponse);
+  rpc Delete(DeleteCstatiEventsWorkflowsPaymentsCollectorsCommand) returns (DeleteCstatiEventsWorkflowsPaymentsCollectorsCommandResponse);
+
+  rpc GetAll(GetAllCstatiEventsWorkflowsPaymentsCollectorsQuery) returns (GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponse);
+}
+
+// Requests
+
+message CreateCstatiEventsWorkflowsPaymentsCollectorsCommand {
+  string event_id = 1;
+  string person_login = 2;
+  CstatiEventWorkflowPaymentCollectorBankDto preferred_bank = 3;
+  string phone_number = 4;
+  string card_number = 5;
+  string concurrency_token = 6;
+}
+
+message CreateCstatiEventsWorkflowsPaymentsCollectorsCommandResponse { }
+
+message UpdateCstatiEventsWorkflowsPaymentsCollectorsCommand {
+  string event_id = 1;
+  string person_login = 2;
+  CstatiEventWorkflowPaymentCollectorBankDto preferred_bank = 3;
+  string phone_number = 4;
+  string card_number = 5;
+  string concurrency_token = 6;
+}
+
+message UpdateCstatiEventsWorkflowsPaymentsCollectorsCommandResponse { }
+
+message DeleteCstatiEventsWorkflowsPaymentsCollectorsCommand {
+  string event_id = 1;
+  string person_login = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteCstatiEventsWorkflowsPaymentsCollectorsCommandResponse { }
+
+message GetAllCstatiEventsWorkflowsPaymentsCollectorsQuery {
+  string event_id = 1;
+}
+
+message GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponse {
+  repeated GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponsePaymentCollector payment_collectors = 1;
+  string concurrency_token = 2;
+}
+
+// Contracts
+
+enum CstatiEventWorkflowPaymentCollectorBankDto {
+  CstatiEventWorkflowPaymentCollectorBankDto_None = 0;
+  CstatiEventWorkflowPaymentCollectorBankDto_Tinkoff = 1;
+  CstatiEventWorkflowPaymentCollectorBankDto_Alpha = 2;
+  CstatiEventWorkflowPaymentCollectorBankDto_Sber = 3;
+  CstatiEventWorkflowPaymentCollectorBankDto_Vtb = 4;
+  CstatiEventWorkflowPaymentCollectorBankDto_Ozon = 5;
+  CstatiEventWorkflowPaymentCollectorBankDto_Yandex = 6;
+}
+
+message GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponsePaymentCollector {
+  string person_login = 1;
+  CstatiEventWorkflowPaymentCollectorBankDto preferred_bank = 2;
+  string phone_number = 3;
+  string card_number = 4;
+  repeated GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponseGuest guests = 5;
+}
+
+message GetAllCstatiEventsWorkflowsPaymentsCollectorsQueryResponseGuest {
+  string id = 1;
+  string full_name = 2;
+  CstatiEventWorkflowGuestPaymentStatusDto payment_status = 3;
+}

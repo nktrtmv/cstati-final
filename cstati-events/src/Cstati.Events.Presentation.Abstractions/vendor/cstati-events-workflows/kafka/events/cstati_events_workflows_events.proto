@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-workflows-presentation-abstractions";
+
+package Cstati.Events.Workflows.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Workflows.Presentation.Abstractions";
+
+import "vendor/cstati-events-workflows/contracts/cstati_events_workflows_common_contracts.proto";
+
+message CstatiEventsWorkflowsEventKey {
+  string key = 1;
+}
+
+message CstatiEventsWorkflowsEventValue {
+  string event_id = 1;
+  oneof event {
+    StartCstatiEventsWorkflowsEvent start = 2;
+    GuestPaymentRefundRequestedCstatiEventsWorkflowsEvent guest_payment_refund_requested = 3;
+    GuestPaymentStatusChangedCstatiEventsWorkflowsEvent guest_payment_status_changed = 4;
+    CompleteCstatiEventsWorkflowsEvent complete = 5;
+  }
+}
+
+// Events
+
+message StartCstatiEventsWorkflowsEvent {
+  string event_name = 1;
+}
+
+message GuestPaymentRefundRequestedCstatiEventsWorkflowsEvent {
+  string guest_telegram_login = 1;
+}
+
+message GuestPaymentStatusChangedCstatiEventsWorkflowsEvent {
+  string guest_telegram_login = 1;
+  CstatiEventWorkflowGuestPaymentStatusDto guest_payment_status = 2;
+  double ticket_price = 3;
+}
+
+message CompleteCstatiEventsWorkflowsEvent { }

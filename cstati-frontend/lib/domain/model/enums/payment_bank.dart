@@ -1,0 +1,1 @@
+enum PaymentBank {none, tinkoff, alpha, sber, vtb}

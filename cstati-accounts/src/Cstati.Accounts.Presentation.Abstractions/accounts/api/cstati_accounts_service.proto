@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option go_package = "cstati-accounts-presentation-abstractions";
+
+package Cstati.Accounts.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Accounts.Presentation.Abstractions";
+
+import "google/protobuf/wrappers.proto";
+
+service CstatiAccountsService {
+  rpc Authorize(AuthorizeCstatiAccountsCommand) returns (AuthorizeCstatiAccountsCommandResponse);
+  rpc Create(CreateCstatiAccountsCommand) returns (CreateCstatiAccountsCommandResponse);
+  rpc Delete(DeleteCstatiAccountsCommand) returns (DeleteCstatiAccountsCommandResponse);
+  rpc AddAccess(AddAccessCstatiAccountsCommand) returns (AddAccessCstatiAccountsCommandResponse);
+  rpc DeleteAccess(DeleteAccessCstatiAccountsCommand) returns (DeleteAccessCstatiAccountsCommandResponse);
+
+  rpc Get(GetCstatiAccountsQuery) returns (GetCstatiAccountsQueryResponse);
+  rpc GetAll(GetAllCstatiAccountsQuery) returns (GetAllCstatiAccountsQueryResponse);
+}
+
+// Requests
+
+message AuthorizeCstatiAccountsCommand {
+  string login = 1;
+  string password = 2;
+}
+
+message AuthorizeCstatiAccountsCommandResponse {
+  bool succeed = 1;
+}
+
+message CreateCstatiAccountsCommand {
+  string login = 1;
+  string password = 2;
+  string full_name = 3;
+}
+
+message CreateCstatiAccountsCommandResponse { }
+
+message DeleteCstatiAccountsCommand {
+  string login = 1;
+  string password = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteCstatiAccountsCommandResponse { }
+
+message AddAccessCstatiAccountsCommand {
+  string login = 1;
+  CstatiAccountAccessDto access = 2;
+  string concurrency_token = 3;
+}
+
+message AddAccessCstatiAccountsCommandResponse { }
+
+message DeleteAccessCstatiAccountsCommand {
+  string login = 1;
+  CstatiAccountAccessDto access = 2;
+  string concurrency_token = 3;
+}
+
+message DeleteAccessCstatiAccountsCommandResponse { }
+
+message GetCstatiAccountsQuery {
+  repeated string logins = 1;
+}
+
+message GetCstatiAccountsQueryResponse {
+  repeated CstatiAccountDto accounts = 1;
+}
+
+message GetAllCstatiAccountsQuery {
+  optional google.protobuf.StringValue query = 1;
+  int32 limit = 2;
+}
+
+message GetAllCstatiAccountsQueryResponse {
+  repeated CstatiAccountDto accounts = 1;
+}
+
+// Contracts
+
+message CstatiAccountDto {
+  string login = 1;
+  string full_name = 2;
+  repeated CstatiAccountAccessDto accesses = 3;
+  string concurrency_token = 4;
+}
+
+message CstatiAccountAccessDto {
+  oneof access {
+    CstatiAccountAdminAccessDto admin = 1;
+    CstatiAccountEventAccessDto event = 2;
+  }
+}
+
+message CstatiAccountAdminAccessDto { }
+
+message CstatiAccountEventAccessDto {
+  string event_id = 1;
+  oneof access {
+    CstatiAccountEventAdminAccessDto admin = 2;
+    CstatiAccountEventPaymentsResponsibleAccessDto payments_responsible = 3;
+    CstatiAccountEventResponsibleAccessDto responsible = 4;
+  }
+}
+
+message CstatiAccountEventAdminAccessDto { }
+
+message CstatiAccountEventPaymentsResponsibleAccessDto { }
+
+message CstatiAccountEventResponsibleAccessDto { }

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+import "Repositories/Events/Contracts/Events/Data/State/Statuses/cstati_event_status.proto";
+import "Repositories/Events/Contracts/Events/Data/State/Tasks/cstati_event_task.proto";
+import "Repositories/Events/Contracts/Events/Data/State/FinancesDetails/cstati_event_finances_details.proto";
+
+message CstatiEventStateDb {
+  CstatiEventStatusDb status = 1;
+  repeated CstatiEventTaskDb tasks = 2;
+  CstatiEventFinancesDetailsDb finances_details = 3;
+}
