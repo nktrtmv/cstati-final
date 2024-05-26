@@ -1,4 +1,3 @@
-using Cstati.Events.Application.Services;
 using Cstati.Events.Application.Services.Processors.ApplicationEvents;
 using Cstati.Events.Application.Services.Processors.ApplicationEvents.CompleteWorkflow;
 using Cstati.Events.Application.Services.Processors.ApplicationEvents.StartWorkflow;
@@ -11,9 +10,7 @@ public static class ApplicationServicesRegistrar
 {
     public static void Configure(IServiceCollection services)
     {
-        services.AddSingleton<CstatiEventsFacade>();
-
-        services.AddSingleton<IApplicationEventProcessor, StartWorkflowCstatiEventApplicationEventProcessor>();
-        services.AddSingleton<IApplicationEventProcessor, CompleteWorkflowCstatiEventApplicationEventProcessor>();
+        services.AddSingleton<IApplicationEventProcessor, StartWorkflowApplicationEventProcessor>();
+        services.AddSingleton<IApplicationEventProcessor, CompleteWorkflowApplicationEventProcessor>();
     }
 }

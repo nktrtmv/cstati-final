@@ -1,10 +1,10 @@
 using Cstati.Events.Application.CstatiEvents.Events.Commands.Update.Contracts;
 using Cstati.Events.Application.CstatiEvents.Events.Contracts.Events.Statuses;
-using Cstati.Events.Application.Services;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context.Factories;
 using Cstati.Events.Domain.Entities.Events.ValueObjects.States.ValueObjects.Statuses;
+using Cstati.Events.Domain.ValueObjects.Events.Updates;
+using Cstati.Events.Infrastructure.Abstractions.Publishers.Internal.ApplicationEvents;
+using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
 
@@ -15,12 +15,14 @@ namespace Cstati.Events.Application.CstatiEvents.Events.Commands.Update;
 [UsedImplicitly]
 internal sealed class UpdateCstatiEventsCommandInternalHandler : IRequestHandler<UpdateCstatiEventsCommandInternal>
 {
-    public UpdateCstatiEventsCommandInternalHandler(CstatiEventsFacade events)
+    public UpdateCstatiEventsCommandInternalHandler(ICstatiEventsRepository events, IInternalApplicationEventsEventSender sender)
     {
         Events = events;
+        Sender = sender;
     }
 
-    private CstatiEventsFacade Events { get; }
+    private ICstatiEventsRepository Events { get; }
+    private IInternalApplicationEventsEventSender Sender { get; }
 
     public async Task Handle(UpdateCstatiEventsCommandInternal request, CancellationToken cancellationToken)
     {
@@ -30,14 +32,19 @@ internal sealed class UpdateCstatiEventsCommandInternalHandler : IRequestHandler
 
         CstatiEventStatus status = CstatiEventStatusInternalConverter.ToDomain(request.Status);
 
-        CstatiEventUpdatingContext updatingContext = CstatiEventUpdatingContextFactory.CreateWithUpdatedInfo(
-            @event,
-            request.ExcelSheetLink,
-            request.Date,
-            request.Location,
-            request.ExpectedGuestsCount,
-            status);
+        var update = new CstatiEventUpdate
+        {
+            ExcelSheetLink = request.ExcelSheetLink,
+            Date = request.Date,
+            Location = request.Location,
+            ExpectedGuestsCount = request.ExpectedGuestsCount,
+            Status = status
+        };
 
-        await Events.Update(@event, updatingContext, cancellationToken);
+        @event.Update(update);
+
+        await Events.Upsert(@event, cancellationToken);
+
+        await Sender.SendProcessCommand(@event.Id, cancellationToken);
     }
 }

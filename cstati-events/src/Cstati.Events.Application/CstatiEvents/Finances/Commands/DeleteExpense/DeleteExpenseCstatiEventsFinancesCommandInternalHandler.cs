@@ -1,8 +1,6 @@
 using Cstati.Events.Application.CstatiEvents.Finances.Commands.DeleteExpense.Contracts;
-using Cstati.Events.Application.Services;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context.Factories;
+using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
 
@@ -13,12 +11,12 @@ namespace Cstati.Events.Application.CstatiEvents.Finances.Commands.DeleteExpense
 [UsedImplicitly]
 internal sealed class DeleteExpenseCstatiEventsFinancesCommandInternalHandler : IRequestHandler<DeleteExpenseCstatiEventsFinancesCommandInternal>
 {
-    public DeleteExpenseCstatiEventsFinancesCommandInternalHandler(CstatiEventsFacade events)
+    public DeleteExpenseCstatiEventsFinancesCommandInternalHandler(ICstatiEventsRepository events)
     {
         Events = events;
     }
 
-    private CstatiEventsFacade Events { get; }
+    private ICstatiEventsRepository Events { get; }
 
     public async Task Handle(DeleteExpenseCstatiEventsFinancesCommandInternal request, CancellationToken cancellationToken)
     {
@@ -26,8 +24,8 @@ internal sealed class DeleteExpenseCstatiEventsFinancesCommandInternalHandler : 
 
         @event.ConcurrencyToken.AssertEqualsTo(request.ConcurrencyToken);
 
-        CstatiEventUpdatingContext updatingContext = CstatiEventUpdatingContextFactory.CreateWithoutExpense(@event, request.ExpenseId);
+        @event.State.FinancesDetails.DeleteExpense(request.ExpenseId);
 
-        await Events.Update(@event, updatingContext, cancellationToken);
+        await Events.Upsert(@event, cancellationToken);
     }
 }

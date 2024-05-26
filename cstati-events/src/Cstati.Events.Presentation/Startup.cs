@@ -5,6 +5,7 @@ using Cstati.Events.Application.CstatiEvents.Events.Contracts.Events.Statuses;
 using Cstati.Events.GenericSubdomain.Configuration;
 using Cstati.Events.Infrastructure;
 using Cstati.Events.Presentation.Consumers.CstatiEventsWorkflows;
+using Cstati.Events.Presentation.Consumers.Internal;
 using Cstati.Events.Presentation.Controllers.Events;
 using Cstati.Events.Presentation.Controllers.Finances;
 using Cstati.Events.Presentation.Controllers.Tasks;
@@ -52,6 +53,18 @@ internal sealed class Startup
                                                 handlers
                                                     .WithHandlerLifetime(InstanceLifetime.Singleton)
                                                     .AddHandler<CstatiEventsWorkflowsEventsHandler>())))
+                        .AddConsumer(
+                            consumer => consumer
+                                .Topic(kafkaOptions.InternalApplicationEventsTopic)
+                                .WithGroupId(kafkaOptions.ConsumerGroup)
+                                .WithBufferSize(10000)
+                                .AddMiddlewares(
+                                    middlewares => middlewares
+                                        .AddTypedHandlers(
+                                            handlers =>
+                                                handlers
+                                                    .WithHandlerLifetime(InstanceLifetime.Singleton)
+                                                    .AddHandler<InternalApplicationEventsEventsHandler>())))
                         .ConfigureProducers(services, kafkaOptions)));
 
         ApplicationServicesRegistrar.Configure(services);

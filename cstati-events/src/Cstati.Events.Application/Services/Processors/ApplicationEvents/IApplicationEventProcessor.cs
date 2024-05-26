@@ -2,5 +2,7 @@ namespace Cstati.Events.Application.Services.Processors.ApplicationEvents;
 
 internal interface IApplicationEventProcessor
 {
-    Task Process<TApplicationEvent>(TApplicationEvent applicationEvent, CancellationToken cancellationToken);
+    Type Type { get; }
+
+    Task Process(string eventId, Guid applicationEventId, CancellationToken cancellationToken);
 }

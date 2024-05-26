@@ -1,5 +1,4 @@
 using Cstati.Events.Domain.Entities.Events.ValueObjects.States.ValueObjects.FinancesDetails;
-using Cstati.Events.Domain.Entities.Events.ValueObjects.States.ValueObjects.FinancesDetails.Factories;
 using Cstati.Events.Domain.Entities.Events.ValueObjects.States.ValueObjects.FinancesDetails.ValueObjects.Expenses;
 using Cstati.Events.Infrastructure.Repositories.Contracts;
 using Cstati.Events.Infrastructure.Repositories.Events.Contracts.Events.Data.State.FinancesDetails.Expenses;
@@ -27,7 +26,7 @@ internal static class CstatiEventFinancesDetailsDbConverter
     {
         CstatiEventExpense[] expenses = financesDetails.Expenses.Select(CstatiEventExpenseDbConverter.ToDomain).ToArray();
 
-        CstatiEventFinancesDetails result = CstatiEventFinancesDetailsFactory.CreateFromDb(
+        var result = CstatiEventFinancesDetails.CreateFrom(
             financesDetails.Collected,
             financesDetails.CurrentBalance,
             expenses,

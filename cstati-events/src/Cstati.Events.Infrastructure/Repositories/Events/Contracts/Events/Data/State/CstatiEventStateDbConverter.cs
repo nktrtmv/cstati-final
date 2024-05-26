@@ -37,7 +37,7 @@ internal static class CstatiEventStateDbConverter
 
         CstatiEventFinancesDetails financesDetails = CstatiEventFinancesDetailsDbConverter.ToDomain(state.FinancesDetails);
 
-        var result = new CstatiEventState(status, tasks, financesDetails);
+        var result = CstatiEventState.CreateFrom(status, tasks, financesDetails);
 
         return result;
     }

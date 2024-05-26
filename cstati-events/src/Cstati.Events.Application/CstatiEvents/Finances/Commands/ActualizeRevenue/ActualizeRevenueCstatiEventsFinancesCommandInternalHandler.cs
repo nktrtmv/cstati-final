@@ -1,9 +1,6 @@
-using Cstati.Events.Application.CstatiEvents.Events.Commands.Delete.Contracts;
 using Cstati.Events.Application.CstatiEvents.Finances.Commands.ActualizeRevenue.Contracts;
-using Cstati.Events.Application.Services;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context.Factories;
+using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
 
@@ -14,12 +11,12 @@ namespace Cstati.Events.Application.CstatiEvents.Finances.Commands.ActualizeReve
 [UsedImplicitly]
 internal sealed class ActualizeRevenueCstatiEventsFinancesCommandInternalHandler : IRequestHandler<ActualizeRevenueCstatiEventsFinancesCommandInternal>
 {
-    public ActualizeRevenueCstatiEventsFinancesCommandInternalHandler(CstatiEventsFacade events)
+    public ActualizeRevenueCstatiEventsFinancesCommandInternalHandler(ICstatiEventsRepository events)
     {
         Events = events;
     }
 
-    private CstatiEventsFacade Events { get; }
+    private ICstatiEventsRepository Events { get; }
 
     public async Task Handle(ActualizeRevenueCstatiEventsFinancesCommandInternal request, CancellationToken cancellationToken)
     {
@@ -27,8 +24,8 @@ internal sealed class ActualizeRevenueCstatiEventsFinancesCommandInternalHandler
 
         @event.ConcurrencyToken.AssertEqualsTo(request.ConcurrencyToken);
 
-        CstatiEventUpdatingContext updatingContext = CstatiEventUpdatingContextFactory.CreateWithActualizedRevenue(@event);
+        @event.State.FinancesDetails.ActualizeRevenue();
 
-        await Events.Update(@event, updatingContext, cancellationToken);
+        await Events.Upsert(@event, cancellationToken);
     }
 }

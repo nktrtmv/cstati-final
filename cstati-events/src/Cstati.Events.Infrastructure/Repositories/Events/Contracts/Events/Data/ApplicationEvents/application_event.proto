@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-infrastructure-repositories-contracts";
+
+package Cstati.Events.Infrastructure.Repositories.Contracts;
+
+option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
+
+import "Repositories/Events/Contracts/Events/Data/ApplicationEvents/Statuses/application_event_status.proto";
+
+import "google/protobuf/timestamp.proto";
+
+message ApplicationEventDb {
+  string id = 1;
+  ApplicationEventStatusDb status = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  oneof event {
+    StartWorkflowApplicationEventDb start_workflow = 5;
+    CompleteWorkflowApplicationEventDb complete_workflow = 6;
+  }
+}
+
+message StartWorkflowApplicationEventDb { }
+
+message CompleteWorkflowApplicationEventDb { }

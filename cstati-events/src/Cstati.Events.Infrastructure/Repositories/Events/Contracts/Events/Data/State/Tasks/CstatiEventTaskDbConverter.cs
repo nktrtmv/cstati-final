@@ -36,7 +36,7 @@ internal static class CstatiEventTaskDbConverter
 
         CstatiEventTaskStatus status = CstatiEventTaskStatusDbConverter.ToDomain(task.Status);
 
-        var result = new CstatiEventTask(task.Id, task.Name, task.ExecutorLogin, task.Description, deadline, status);
+        var result = CstatiEventTask.CreateFrom(task.Id, task.Name, task.ExecutorLogin, task.Description, deadline, status);
 
         return result;
     }

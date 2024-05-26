@@ -4,16 +4,9 @@ using Cstati.Events.Domain.Entities.Events.ValueObjects.States.ValueObjects.Task
 
 namespace Cstati.Events.Domain.Entities.Events.ValueObjects.States;
 
-public sealed class CstatiEventState
+public sealed partial class CstatiEventState
 {
-    public CstatiEventState(CstatiEventStatus status, CstatiEventTask[] tasks, CstatiEventFinancesDetails financesDetails)
-    {
-        Status = status;
-        Tasks = tasks;
-        FinancesDetails = financesDetails;
-    }
-
     public CstatiEventStatus Status { get; private set; }
-    public CstatiEventTask[] Tasks { get; }
+    public CstatiEventTask[] Tasks { get; private set; }
     public CstatiEventFinancesDetails FinancesDetails { get; }
 }

@@ -1,6 +1,5 @@
 using Cstati.Events.Application.CstatiEvents.Events.Commands.Create.Contracts;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Factories;
 using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
@@ -21,7 +20,7 @@ internal sealed class CreateCstatiEventsCommandInternalHandler : IRequestHandler
 
     public async Task<CreateCstatiEventsCommandResponseInternal> Handle(CreateCstatiEventsCommandInternal request, CancellationToken cancellationToken)
     {
-        CstatiEvent @event = CstatiEventFactory.CreateNew(request.Name);
+        var @event = CstatiEvent.CreateNew(request.Name);
 
         await Events.Upsert(@event, cancellationToken);
 
