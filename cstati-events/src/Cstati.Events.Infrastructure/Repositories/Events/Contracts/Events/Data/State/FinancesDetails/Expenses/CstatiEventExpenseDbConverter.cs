@@ -21,7 +21,7 @@ internal static class CstatiEventExpenseDbConverter
 
     internal static CstatiEventExpense ToDomain(CstatiEventExpenseDb expense)
     {
-        var result = new CstatiEventExpense(expense.Id, expense.PersonLogin, expense.Description, expense.Amount, expense.Market);
+        var result = CstatiEventExpense.CreateFrom(expense.Id, expense.PersonLogin, expense.Description, expense.Amount, expense.Market);
 
         return result;
     }

@@ -7,7 +7,7 @@ internal static class GetCstatiEventsQueryResponseEventInternalConverter
 {
     internal static GetCstatiEventsQueryResponseEventInternal FromDomain(CstatiEvent @event)
     {
-        CstatiEventStatusInternal status = CstatiEventStatusInternalConverter.FromDomain(@event.Status);
+        CstatiEventStatusInternal status = CstatiEventStatusInternalConverter.FromDomain(@event.State.Status);
 
         var result = new GetCstatiEventsQueryResponseEventInternal(
             @event.Id,

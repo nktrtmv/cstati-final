@@ -1,6 +1,7 @@
 using Cstati.Events.Domain.Entities.Events;
 using Cstati.Events.GenericSubdomain.Tokens.Concurrency;
 using Cstati.Events.Infrastructure.Repositories.Contracts;
+using Cstati.Events.Infrastructure.Repositories.Events.Contracts.Events.Data.ApplicationEvents;
 using Cstati.Events.Infrastructure.Repositories.Events.Contracts.Events.Data.Info;
 using Cstati.Events.Infrastructure.Repositories.Events.Contracts.Events.Data.State;
 using Cstati.Events.Infrastructure.Repositories.Events.Contracts.Events.Data.State.Statuses;
@@ -13,7 +14,7 @@ internal static class CstatiEventDbFromDomainConverter
 {
     internal static CstatiEventDb FromDomain(CstatiEvent @event)
     {
-        var status = CstatiEventStatusDbConverter.ToString(@event.Status);
+        var status = CstatiEventStatusDbConverter.ToString(@event.State.Status);
 
         byte[] data = ToData(@event);
 
@@ -38,10 +39,14 @@ internal static class CstatiEventDbFromDomainConverter
 
         CstatiEventStateDb state = CstatiEventStateDbConverter.FromDomain(@event.State);
 
+        ApplicationEventDb[] applicationEvents =
+            @event.ApplicationEvents.Select(ApplicationEventDbConverter.FromDomain).ToArray();
+
         var data = new CstatiEventDataDb
         {
             Info = info,
-            State = state
+            State = state,
+            ApplicationEvents = { applicationEvents }
         };
 
         byte[] result = data.ToByteArray();

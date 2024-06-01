@@ -23,12 +23,12 @@ internal sealed class DeleteCstatiEventsCommandInternalHandler : IRequestHandler
     {
         CstatiEvent @event = await Events.GetRequired(request.EventId, cancellationToken);
 
-        if (@event.Status != CstatiEventStatus.NotStarted)
+        @event.ConcurrencyToken.AssertEqualsTo(request.ConcurrencyToken);
+
+        if (@event.State.Status != CstatiEventStatus.NotStarted)
         {
             throw new ApplicationException($"Cannot delete started event (eventId: {request.EventId}).");
         }
-
-        @event.ConcurrencyToken.AssertEqualsTo(request.ConcurrencyToken);
 
         await Events.Delete(request.EventId, request.ConcurrencyToken, cancellationToken);
     }

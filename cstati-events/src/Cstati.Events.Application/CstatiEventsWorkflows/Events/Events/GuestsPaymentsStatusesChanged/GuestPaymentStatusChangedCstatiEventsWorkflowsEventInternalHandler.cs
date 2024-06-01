@@ -1,10 +1,8 @@
 using Cstati.Events.Application.CstatiEventsWorkflows.Events.Events.GuestsPaymentsStatusesChanged.Contracts;
 using Cstati.Events.Application.CstatiEventsWorkflows.Events.Events.GuestsPaymentsStatusesChanged.Contracts.GuestsPaymentsStatuses;
-using Cstati.Events.Application.Services;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context.Factories;
 using Cstati.Events.GenericSubdomain.Exceptions;
+using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
 
@@ -15,12 +13,12 @@ namespace Cstati.Events.Application.CstatiEventsWorkflows.Events.Events.GuestsPa
 [UsedImplicitly]
 internal sealed class GuestPaymentStatusChangedCstatiEventsWorkflowsEventInternalHandler : IRequestHandler<GuestPaymentStatusChangedCstatiEventsWorkflowsEventInternal>
 {
-    public GuestPaymentStatusChangedCstatiEventsWorkflowsEventInternalHandler(CstatiEventsFacade events)
+    public GuestPaymentStatusChangedCstatiEventsWorkflowsEventInternalHandler(ICstatiEventsRepository events)
     {
         Events = events;
     }
 
-    private CstatiEventsFacade Events { get; }
+    private ICstatiEventsRepository Events { get; }
 
     public async Task Handle(GuestPaymentStatusChangedCstatiEventsWorkflowsEventInternal request, CancellationToken cancellationToken)
     {
@@ -34,9 +32,8 @@ internal sealed class GuestPaymentStatusChangedCstatiEventsWorkflowsEventInterna
                 _ => throw new ArgumentTypeOutOfRangeException(request.PaymentStatus)
             };
 
-        CstatiEventUpdatingContext updatingContext =
-            CstatiEventUpdatingContextFactory.CreateWithUpdatedCollected(@event, collected);
+        @event.State.FinancesDetails.UpdateCollected(collected);
 
-        await Events.Update(@event, updatingContext, cancellationToken);
+        await Events.Upsert(@event, cancellationToken);
     }
 }

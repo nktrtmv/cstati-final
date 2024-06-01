@@ -178,7 +178,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CREATE_TOPICS: >-
-        cstati-events-workflows-events:3:1
+        cstati-events-workflows-events:3:1,
+        cstati-events-internal-application-events:1:1
     ports:
       - "9092:9092"
     expose:

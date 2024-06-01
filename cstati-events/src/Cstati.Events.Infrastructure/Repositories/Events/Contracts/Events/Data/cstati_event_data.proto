@@ -8,8 +8,10 @@ option csharp_namespace = "Cstati.Events.Infrastructure.Repositories.Contracts";
 
 import "Repositories/Events/Contracts/Events/Data/Info/cstati_event_info.proto";
 import "Repositories/Events/Contracts/Events/Data/State/cstati_event_state.proto";
+import "Repositories/Events/Contracts/Events/Data/ApplicationEvents/application_event.proto";
 
 message CstatiEventDataDb {
   CstatiEventInfoDb info = 1;
   CstatiEventStateDb state = 2;
+  repeated ApplicationEventDb application_events = 3;
 }

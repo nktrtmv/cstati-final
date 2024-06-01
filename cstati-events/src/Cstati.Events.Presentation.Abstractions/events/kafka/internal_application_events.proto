@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "cstati-events-presentation-abstractions";
+
+package Cstati.Events.Presentation.Abstractions;
+
+option csharp_namespace = "Cstati.Events.Presentation.Abstractions";
+
+message InternalApplicationEventsEventKey {
+  string key = 1;
+}
+
+message InternalApplicationEventsEventValue {
+  oneof command {
+    ProcessApplicationEventsCommand process = 1;
+  }
+}
+
+message ProcessApplicationEventsCommand {
+  string event_id = 1;
+}

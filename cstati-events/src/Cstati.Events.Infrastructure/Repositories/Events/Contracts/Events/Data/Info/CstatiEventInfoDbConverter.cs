@@ -29,7 +29,7 @@ internal static class CstatiEventInfoDbConverter
     {
         UtcDateTime? date = NullableConverter.Convert(info.Date, UtcDateTimeConverterFrom.FromTimestamp);
 
-        var result = new CstatiEventInfo(info.Name, info.ExcelSheetLink, date, info.Location, info.ExpectedGuestsCount);
+        var result = CstatiEventInfo.CreateFrom(info.Name, info.ExcelSheetLink, date, info.Location, info.ExpectedGuestsCount);
 
         return result;
     }

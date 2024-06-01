@@ -1,8 +1,6 @@
 using Cstati.Events.Application.CstatiEvents.Tasks.Commands.Delete.Contracts;
-using Cstati.Events.Application.Services;
 using Cstati.Events.Domain.Entities.Events;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context;
-using Cstati.Events.Domain.Entities.Events.Services.Updaters.ValueObjects.Context.Factories;
+using Cstati.Events.Infrastructure.Abstractions.Repositories.Events;
 
 using JetBrains.Annotations;
 
@@ -13,12 +11,12 @@ namespace Cstati.Events.Application.CstatiEvents.Tasks.Commands.Delete;
 [UsedImplicitly]
 internal sealed class DeleteCstatiEventsTasksCommandInternalHandler : IRequestHandler<DeleteCstatiEventsTasksCommandInternal>
 {
-    public DeleteCstatiEventsTasksCommandInternalHandler(CstatiEventsFacade events)
+    public DeleteCstatiEventsTasksCommandInternalHandler(ICstatiEventsRepository events)
     {
         Events = events;
     }
 
-    private CstatiEventsFacade Events { get; }
+    private ICstatiEventsRepository Events { get; }
 
     public async Task Handle(DeleteCstatiEventsTasksCommandInternal request, CancellationToken cancellationToken)
     {
@@ -26,8 +24,8 @@ internal sealed class DeleteCstatiEventsTasksCommandInternalHandler : IRequestHa
 
         @event.ConcurrencyToken.AssertEqualsTo(request.ConcurrencyToken);
 
-        CstatiEventUpdatingContext updatingContext = CstatiEventUpdatingContextFactory.CreateWithoutTask(@event, request.TaskId);
+        @event.State.DeleteTask(request.TaskId);
 
-        await Events.Update(@event, updatingContext, cancellationToken);
+        await Events.Upsert(@event, cancellationToken);
     }
 }
